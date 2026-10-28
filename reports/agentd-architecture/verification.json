@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-28",
+  "report_slides": 36,
+  "original_snapshot_files_unchanged": 32,
+  "source_references_checked": 99,
+  "pptx": {
+    "package_parts": 156,
+    "editable_text_lines": 975,
+    "speaker_note_pages": 36,
+    "all_xml_and_relationships": "PASS",
+    "content_matches_source": "PASS",
+    "native_powerpoint_or_libreoffice_open": "NOT_RUN"
+  },
+  "pdf": {
+    "pages": 36,
+    "embedded_fonts": 4,
+    "unicode_maps": 4,
+    "vector_content": "PASS",
+    "structure": "PASS"
+  },
+  "html": {
+    "offline_assets": "PASS",
+    "javascript_syntax": "PASS",
+    "content_matches": "PASS",
+    "browser_interaction_execution": "NOT_RUN"
+  },
+  "visual_review": "36-slide contact sheets plus selected 1600x900 pages inspected; text bounds and text overlap checked",
+  "project_contract_check": {
+    "command": "/home/cying/agentd/.venv/bin/python -m specs.agentd_v1.check",
+    "result": "PASS",
+    "scope": "offline_design_contract_only",
+    "operations": 29,
+    "registered_models": 153,
+    "schema_definitions": 154,
+    "valid_examples": 8,
+    "negative_examples": 19,
+    "split_contract_regression_checks": 3,
+    "generated_files_checked": 3,
+    "runtime_model_host_validation": "NOT_RUN"
+  },
+  "artifacts": {
+    "agentd-需求与架构报告.pptx": {
+      "bytes": 190605,
+      "sha256": "6130be49e7b4668464368d7c938eb42c987a344a74950a957c93fe0027cb85cf"
+    },
+    "agentd-需求与架构报告.pdf": {
+      "bytes": 615306,
+      "sha256": "fa1236d323b9964d2c108f05203f29b656a2d50d2ef4730c240d68a01e7b3ed8"
+    },
+    "index.html": {
+      "bytes": 310605,
+      "sha256": "7db0b8219b73266aa1221c8c9e3d6817e964bb7d506f4284e227436a773ce1fb"
+    },
+    "讲解与依据.html": {
+      "bytes": 289502,
+      "sha256": "83dab54a99495a1ce2f8bf73bebd7046364769a8c72ead7e7181b1f6ce2fe380"
+    }
+  }
+}

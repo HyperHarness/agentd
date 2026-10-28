@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "scope": "offline_design_contract_only",
+  "operations": 29,
+  "routes": 29,
+  "registered_models": 153,
+  "schema_definitions": 154,
+  "resolved_local_references": 716,
+  "behavior_document_references": 8,
+  "valid_examples": 8,
+  "split_contract_regression_checks": 3,
+  "structural_rejections": 7,
+  "semantic_rejections": 7,
+  "json_policy_rejections": 5,
+  "sample_content_integrity_checks": 1,
+  "generated_files_checked": 3,
+  "runtime_model_host_validation": "NOT_RUN"
+}

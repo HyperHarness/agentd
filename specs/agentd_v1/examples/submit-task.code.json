@@ -1,0 +1,48 @@
+{
+  "spec": {
+    "schema_version": "1",
+    "kind": "code",
+    "title": "修复空输入解析",
+    "goal": "空输入返回空结果，不抛出异常。",
+    "scope": {
+      "include": [
+        "src/parser.py",
+        "tests/test_parser.py"
+      ],
+      "exclude": [
+        "deploy/**"
+      ]
+    },
+    "difficulty": {
+      "scale_id": "difficulty_1_5",
+      "level": 2,
+      "reason": "单模块、验收明确"
+    },
+    "inputs": [
+      {
+        "kind": "git",
+        "source_id": "repo_main",
+        "commit": {
+          "algorithm": "sha1",
+          "value": "1111111111111111111111111111111111111111"
+        },
+        "mount_path": "repo",
+        "purpose": "base"
+      }
+    ],
+    "acceptance": [
+      {
+        "id": "C1",
+        "description": "空字符串与空文件均返回空结果，现有解析回归通过，并提供测试证据。"
+      }
+    ],
+    "deliverables": [
+      {
+        "key": "code",
+        "kind": "code_commit",
+        "description": "固定 base 上的候选提交及测试证据",
+        "required": true
+      }
+    ]
+  }
+}

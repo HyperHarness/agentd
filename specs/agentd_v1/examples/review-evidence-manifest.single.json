@@ -1,0 +1,13 @@
+{
+  "schema_version": "review-evidence/1",
+  "members": [
+    {
+      "index": 0,
+      "artifact_id": "artifact_review_1",
+      "sha256": "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03",
+      "size_bytes": 6
+    }
+  ],
+  "total_size_bytes": 6,
+  "total_sha256": "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03"
+}

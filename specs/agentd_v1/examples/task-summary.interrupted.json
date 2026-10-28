@@ -1,0 +1,55 @@
+{
+  "task_id": "task_42",
+  "title": "修复构建内存问题",
+  "kind": "code",
+  "status": "running",
+  "outcome": null,
+  "version": 7,
+  "difficulty": {
+    "scale_id": "difficulty_1_5",
+    "level": 3
+  },
+  "review_rejections": 1,
+  "assignment": {
+    "worker_id": "worker_2",
+    "model_id": "model_b",
+    "config_id": "config_2_v1"
+  },
+  "execution": {
+    "observation": "interrupted",
+    "execution_id": "execution_42_2"
+  },
+  "review": {
+    "observation": "none",
+    "candidate_id": null
+  },
+  "attention": [
+    {
+      "code": "MEMORY_LIMIT",
+      "detail": "工作区已保留；在 Dashboard 调整本任务资源后继续",
+      "subject_ref": "execution_42_2",
+      "resolvable_by": "admin",
+      "action_ref": null
+    }
+  ],
+  "actions": [
+    {
+      "name": "resume_task",
+      "ref": "resume_ref_opaque",
+      "label": "核对条件后继续",
+      "availability": "requires_check",
+      "reason_code": "MEMORY_LIMIT",
+      "requirements": []
+    },
+    {
+      "name": "cancel_task",
+      "ref": null,
+      "label": "取消任务",
+      "availability": "available",
+      "reason_code": null,
+      "requirements": []
+    }
+  ],
+  "created_at": "2026-10-28T04:00:00Z",
+  "updated_at": "2026-10-28T04:10:00Z"
+}

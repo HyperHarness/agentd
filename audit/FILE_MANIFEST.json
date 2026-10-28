@@ -1,0 +1,262 @@
+{
+  "format_version": 1,
+  "prepared_at_utc": "2026-10-28T06:07:41.883560+00:00",
+  "source_root": "/home/cying/agentd",
+  "destination_root": "/home/cying/agentd-new",
+  "scope": "Current from-scratch product requirements, architecture topics, executable design contracts and audit package",
+  "source_files": 26,
+  "inventory_excludes": [
+    "audit/FILE_MANIFEST.json",
+    "audit/SHA256SUMS"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 4219,
+      "sha256": "8035e30b01166d04e8ad74891f6dfe5b32b87cda24d46b3cc16df786b680d387",
+      "source_path": null,
+      "source_sha256": null,
+      "change": "added_for_package"
+    },
+    {
+      "path": "audit/CONTRACT_CHECK.json",
+      "size_bytes": 503,
+      "sha256": "52604f7845a9219b707f4900a8454b645aab061fa3133cc55f830b0acdbadee3",
+      "source_path": null,
+      "source_sha256": null,
+      "change": "added_for_package"
+    },
+    {
+      "path": "audit/VALIDATION.md",
+      "size_bytes": 1882,
+      "sha256": "42f327bb3caf4fbede8cd925b26b51f468f32e70fe193e1059ca5ddc31a50a0c",
+      "source_path": null,
+      "source_sha256": null,
+      "change": "added_for_package"
+    },
+    {
+      "path": "docs/AGENT_INTERFACE_DESIGN.md",
+      "size_bytes": 716,
+      "sha256": "5e7cae4e30dc15ee817e0767eb8a8fb25b3afc5b5cc025fa945ee9bbd89d6ba4",
+      "source_path": "/home/cying/agentd/docs/AGENT_INTERFACE_DESIGN.md",
+      "source_sha256": "5e7cae4e30dc15ee817e0767eb8a8fb25b3afc5b5cc025fa945ee9bbd89d6ba4",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/PRODUCT_REQUIREMENTS_BASELINE.md",
+      "size_bytes": 50373,
+      "sha256": "bdef7892de383d2b8356c87099976baa2b5e1021c22c509b2f0e22390766d5f7",
+      "source_path": "/home/cying/agentd/docs/PRODUCT_REQUIREMENTS_BASELINE.md",
+      "source_sha256": "bdef7892de383d2b8356c87099976baa2b5e1021c22c509b2f0e22390766d5f7",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/SOFTWARE_ARCHITECTURE_PROPOSAL.md",
+      "size_bytes": 11955,
+      "sha256": "d757828853faff140377a65459f8e8be74a5470c5ce3c5fb19e11d141afe4687",
+      "source_path": "/home/cying/agentd/docs/SOFTWARE_ARCHITECTURE_PROPOSAL.md",
+      "source_sha256": "d757828853faff140377a65459f8e8be74a5470c5ce3c5fb19e11d141afe4687",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/DECISIONS_AND_EVIDENCE.md",
+      "size_bytes": 23567,
+      "sha256": "c19a8d14fd0718f4168efeeed1cd406e2c5491b4cd285ba3a363ae8c00c5bb33",
+      "source_path": "/home/cying/agentd/docs/design/DECISIONS_AND_EVIDENCE.md",
+      "source_sha256": "c19a8d14fd0718f4168efeeed1cd406e2c5491b4cd285ba3a363ae8c00c5bb33",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/INTERFACE_GUIDE.md",
+      "size_bytes": 37726,
+      "sha256": "e710226c69408a322c9ea20f2a9b3ec7ac911cd25d79060412f023b26e4548a3",
+      "source_path": "/home/cying/agentd/docs/design/INTERFACE_GUIDE.md",
+      "source_sha256": "e710226c69408a322c9ea20f2a9b3ec7ac911cd25d79060412f023b26e4548a3",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/RELIABILITY_AND_STORAGE.md",
+      "size_bytes": 38396,
+      "sha256": "26a6b84f1fb15d6f0331d33dbe57f19d147f9ff5160d4459d4cd373856eba3f9",
+      "source_path": "/home/cying/agentd/docs/design/RELIABILITY_AND_STORAGE.md",
+      "source_sha256": "26a6b84f1fb15d6f0331d33dbe57f19d147f9ff5160d4459d4cd373856eba3f9",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/RUNTIME_LIFECYCLE.md",
+      "size_bytes": 36251,
+      "sha256": "f8d91106d874581c2f47d2440cce68f2493cd61a39f95b1acc9415bdcf1fe897",
+      "source_path": "/home/cying/agentd/docs/design/RUNTIME_LIFECYCLE.md",
+      "source_sha256": "f8d91106d874581c2f47d2440cce68f2493cd61a39f95b1acc9415bdcf1fe897",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/TASK_AND_REVIEW_PROTOCOL.md",
+      "size_bytes": 35595,
+      "sha256": "a6ddaf67d62340ff2c526c8ec844d56dc6cdd566ad52a2631b03d18adddedcd1",
+      "source_path": "/home/cying/agentd/docs/design/TASK_AND_REVIEW_PROTOCOL.md",
+      "source_sha256": "a6ddaf67d62340ff2c526c8ec844d56dc6cdd566ad52a2631b03d18adddedcd1",
+      "change": "unchanged"
+    },
+    {
+      "path": "docs/design/VALIDATION_PLAN.md",
+      "size_bytes": 14836,
+      "sha256": "49e51f287c0e547b51d1501e7fa4ba56f91f411433bc2fee35f08fba94423fad",
+      "source_path": "/home/cying/agentd/docs/design/VALIDATION_PLAN.md",
+      "source_sha256": "49e51f287c0e547b51d1501e7fa4ba56f91f411433bc2fee35f08fba94423fad",
+      "change": "unchanged"
+    },
+    {
+      "path": "requirements-design.txt",
+      "size_bytes": 198,
+      "sha256": "fbf5d854259050dfcf8d13a149f59cf2d0affd68d0c5043cb6c62abf10c6904c",
+      "source_path": null,
+      "source_sha256": null,
+      "change": "added_for_package"
+    },
+    {
+      "path": "specs/__init__.py",
+      "size_bytes": 83,
+      "sha256": "bf87dd36530e90441a96bdbcffa44088e4a1267bbb8889ab923e3711237e11d6",
+      "source_path": null,
+      "source_sha256": null,
+      "change": "added_for_package"
+    },
+    {
+      "path": "specs/agentd_v1/README.md",
+      "size_bytes": 5297,
+      "sha256": "5121a9d77646ea8e73cbca5cc71c32831e7dae364c5242df7adf858f19dda8c4",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/README.md",
+      "source_sha256": "59b455aa1cb80acc4e620ff06fe93b09ad0daf1f63a847d7840ef1e3e4d6fb97",
+      "change": "readme_path_adaptation"
+    },
+    {
+      "path": "specs/agentd_v1/__init__.py",
+      "size_bytes": 233,
+      "sha256": "475114e857e7e25124244ccace251354aeac19141978eb19156719a2c1434058",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/__init__.py",
+      "source_sha256": "475114e857e7e25124244ccace251354aeac19141978eb19156719a2c1434058",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/check.py",
+      "size_bytes": 18456,
+      "sha256": "ad9c4aedaf4f986788cac4c443e28b433af7ce801663e79d78c27a6ea81729fa",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/check.py",
+      "source_sha256": "ad9c4aedaf4f986788cac4c443e28b433af7ce801663e79d78c27a6ea81729fa",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/problem.review-lease-expired.json",
+      "size_bytes": 405,
+      "sha256": "21c1f6743d6721947850f47a794f28fa270a06bfeec05eef5211605398102cc5",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/problem.review-lease-expired.json",
+      "source_sha256": "21c1f6743d6721947850f47a794f28fa270a06bfeec05eef5211605398102cc5",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/resource-vector.valid.json",
+      "size_bytes": 87,
+      "sha256": "734acbceab0022a4c1f526700840fd289de2f2fcc8d409fe4988ec308605816e",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/resource-vector.valid.json",
+      "source_sha256": "734acbceab0022a4c1f526700840fd289de2f2fcc8d409fe4988ec308605816e",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/review-decision.pass.json",
+      "size_bytes": 463,
+      "sha256": "3f0240467f48f563825d210aeda1ab3d489a8ac7d2a94096685bb0fca242db47",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/review-decision.pass.json",
+      "source_sha256": "3f0240467f48f563825d210aeda1ab3d489a8ac7d2a94096685bb0fca242db47",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/review-evidence-manifest.single.json",
+      "size_bytes": 353,
+      "sha256": "4e41462425323da37085a5e2615a7b0af4fa15a9b62dc40541de6e25e40d5bd6",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/review-evidence-manifest.single.json",
+      "source_sha256": "4e41462425323da37085a5e2615a7b0af4fa15a9b62dc40541de6e25e40d5bd6",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/submit-task.code.json",
+      "size_bytes": 1099,
+      "sha256": "0836327b6ec5e011e6e12c2952575a1d6283d4676b33a21e98862011ebc2a9cb",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/submit-task.code.json",
+      "source_sha256": "0836327b6ec5e011e6e12c2952575a1d6283d4676b33a21e98862011ebc2a9cb",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/task-summary.interrupted.json",
+      "size_bytes": 1255,
+      "sha256": "322a90920310012be3d909e3f5d88309e052a31a9730145ce88260af51198a8e",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/task-summary.interrupted.json",
+      "source_sha256": "322a90920310012be3d909e3f5d88309e052a31a9730145ce88260af51198a8e",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/upload-review-evidence.text.json",
+      "size_bytes": 237,
+      "sha256": "93c3756a6193dc67cbb8c625c4adfbd4505f65a3c85a6c75f584d9021e8dfe0d",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/upload-review-evidence.text.json",
+      "source_sha256": "93c3756a6193dc67cbb8c625c4adfbd4505f65a3c85a6c75f584d9021e8dfe0d",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/examples/worker-delivery.code.json",
+      "size_bytes": 537,
+      "sha256": "39b08b64cd6dde9e11ab7862e30747042dd4df2f9ad7a0e4d5ca025e33860d9a",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/examples/worker-delivery.code.json",
+      "source_sha256": "39b08b64cd6dde9e11ab7862e30747042dd4df2f9ad7a0e4d5ca025e33860d9a",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/generate.py",
+      "size_bytes": 25519,
+      "sha256": "d31e730d66b3ca704b9026db0f6c81637b08ce53914d2becb649cb9e210bf2c3",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/generate.py",
+      "source_sha256": "d31e730d66b3ca704b9026db0f6c81637b08ce53914d2becb649cb9e210bf2c3",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/generated/API_REFERENCE.md",
+      "size_bytes": 182797,
+      "sha256": "b25bca4ef18aec5a6d4cbd1c2f02e7eff807a34bad966cbca98fa3ead8679365",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/generated/API_REFERENCE.md",
+      "source_sha256": "b25bca4ef18aec5a6d4cbd1c2f02e7eff807a34bad966cbca98fa3ead8679365",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/generated/openapi.json",
+      "size_bytes": 546025,
+      "sha256": "505b01ce9772efbe522ea4f6680fb4819a86713767cce456077c84c146a900ae",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/generated/openapi.json",
+      "source_sha256": "505b01ce9772efbe522ea4f6680fb4819a86713767cce456077c84c146a900ae",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/generated/schemas.json",
+      "size_bytes": 179138,
+      "sha256": "34d74758f6545445dd2595ca7985f0b5112fc6043608fbabac3167e64ac3ad5b",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/generated/schemas.json",
+      "source_sha256": "34d74758f6545445dd2595ca7985f0b5112fc6043608fbabac3167e64ac3ad5b",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/models.py",
+      "size_bytes": 55955,
+      "sha256": "a634b85c7fe181bdfb179bb2edb08d8a8cce7ce95caf20ce01d64729d4c951f1",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/models.py",
+      "source_sha256": "a634b85c7fe181bdfb179bb2edb08d8a8cce7ce95caf20ce01d64729d4c951f1",
+      "change": "unchanged"
+    },
+    {
+      "path": "specs/agentd_v1/operations.py",
+      "size_bytes": 18306,
+      "sha256": "7c073adda9173e0fdb99b6b9622669501a5c68d73f8284210d50007669527071",
+      "source_path": "/home/cying/agentd/specs/agentd_v1/operations.py",
+      "source_sha256": "7c073adda9173e0fdb99b6b9622669501a5c68d73f8284210d50007669527071",
+      "change": "unchanged"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "review_handle": "review_handle_42_1",
+  "verdict": "PASS",
+  "reason": "独立复核满足 C1。",
+  "evidence_refs": [
+    {
+      "artifact_id": "artifact_review_1",
+      "sha256": "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03"
+    }
+  ],
+  "criterion_results": [
+    {
+      "criterion_id": "C1",
+      "result": "met",
+      "reason": "独立验证通过。",
+      "evidence_refs": [
+        "artifact_review_1"
+      ]
+    }
+  ]
+}

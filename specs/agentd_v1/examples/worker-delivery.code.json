@@ -1,0 +1,27 @@
+{
+  "schema_version": "worker-delivery/1",
+  "kind": "code",
+  "summary": "本候选完成情况",
+  "code": {
+    "deliverable_key": "code",
+    "candidate_commit": "1111111111111111111111111111111111111111"
+  },
+  "artifacts": [
+    {
+      "name": "test-log",
+      "relative_path": "evidence/test.log",
+      "kind": "test_log",
+      "media_type": "text/plain"
+    }
+  ],
+  "checks": [
+    {
+      "name": "unit",
+      "status": "passed",
+      "evidence_names": [
+        "test-log"
+      ]
+    }
+  ],
+  "known_limitations": []
+}

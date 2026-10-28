@@ -1,0 +1,6 @@
+{
+  "cpu_quota": 150,
+  "memory_bytes": 4294967296,
+  "pids": 512,
+  "swap_bytes": 0
+}

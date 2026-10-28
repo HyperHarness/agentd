@@ -1,0 +1,12 @@
+{
+  "type": "urn:agentd:problem:REVIEW_LEASE_EXPIRED",
+  "title": "审核租约已过期",
+  "status": 409,
+  "detail": "保留报告草稿，使用新请求重新领取原候选并核对材料。",
+  "instance": "request_trace_73",
+  "code": "REVIEW_LEASE_EXPIRED",
+  "retry": "refresh_then_new_request",
+  "operation_id": "operation_review_submit_73",
+  "request_recorded": true,
+  "field_errors": []
+}

@@ -1,0 +1,7196 @@
+{
+  "$defs": {
+    "Action": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "enum": [
+            "available",
+            "requires_check",
+            "unavailable"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "name": {
+          "enum": [
+            "resume_task",
+            "cancel_task"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "reason_code": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason Code"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ref"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/ResolutionRequirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "ref",
+        "label",
+        "availability",
+        "reason_code",
+        "requirements"
+      ],
+      "title": "Action",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "AdminServiceView": {
+      "additionalProperties": false,
+      "properties": {
+        "dispatch": {
+          "$ref": "#/$defs/DispatchResult"
+        },
+        "maintenance": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "description": "Maintenance observation; V1 lifecycle schema is separately staged.",
+          "title": "Maintenance",
+          "type": "object"
+        },
+        "operations": {
+          "items": {
+            "$ref": "#/$defs/OperationSummary"
+          },
+          "title": "Operations",
+          "type": "array"
+        },
+        "release_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Release Id",
+          "type": "string"
+        },
+        "state": {
+          "minLength": 1,
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_id",
+        "state",
+        "dispatch",
+        "maintenance",
+        "operations"
+      ],
+      "title": "AdminServiceView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "AdminSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog": {
+          "items": {
+            "$ref": "#/$defs/CatalogView"
+          },
+          "title": "Catalog",
+          "type": "array"
+        },
+        "credential_sources": {
+          "items": {
+            "$ref": "#/$defs/CredentialSourceView"
+          },
+          "title": "Credential Sources",
+          "type": "array"
+        },
+        "csrf_token": {
+          "minLength": 1,
+          "title": "Csrf Token",
+          "type": "string"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "projects": {
+          "items": {
+            "$ref": "#/$defs/ProjectView"
+          },
+          "title": "Projects",
+          "type": "array"
+        },
+        "role_bindings": {
+          "items": {
+            "$ref": "#/$defs/BindingView"
+          },
+          "title": "Role Bindings",
+          "type": "array"
+        },
+        "service": {
+          "$ref": "#/$defs/AdminServiceView"
+        },
+        "workers": {
+          "items": {
+            "$ref": "#/$defs/WorkerView"
+          },
+          "title": "Workers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "service",
+        "projects",
+        "workers",
+        "credential_sources",
+        "role_bindings",
+        "catalog",
+        "limits",
+        "csrf_token",
+        "meta"
+      ],
+      "title": "AdminSnapshot",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactChunk": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Activity Ref"
+        },
+        "artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "data": {
+          "title": "Data",
+          "type": "string"
+        },
+        "encoding": {
+          "const": "base64",
+          "title": "Encoding",
+          "type": "string"
+        },
+        "eof": {
+          "title": "Eof",
+          "type": "boolean"
+        },
+        "length": {
+          "maximum": 262144,
+          "minimum": 0,
+          "title": "Length",
+          "type": "integer"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "next_offset": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Offset"
+        },
+        "offset": {
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact",
+        "offset",
+        "length",
+        "encoding",
+        "data",
+        "eof",
+        "next_offset",
+        "activity_ref",
+        "meta"
+      ],
+      "title": "ArtifactChunk",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactInput": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "artifact",
+          "title": "Kind",
+          "type": "string"
+        },
+        "mount_path": {
+          "minLength": 1,
+          "title": "Mount Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "artifact_id",
+        "sha256",
+        "mount_path"
+      ],
+      "title": "ArtifactInput",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactKeepResult": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "retiring",
+            "missing",
+            "corrupt",
+            "expired"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expires At"
+        },
+        "explicit_keep": {
+          "title": "Explicit Keep",
+          "type": "boolean"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "explicit_keep",
+        "version",
+        "availability",
+        "expires_at"
+      ],
+      "title": "ArtifactKeepResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactKeepUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "keep": {
+          "title": "Keep",
+          "type": "boolean"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "expected_version",
+        "keep",
+        "reason"
+      ],
+      "title": "ArtifactKeepUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactReadQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "default": 65536,
+          "maximum": 262144,
+          "minimum": 1,
+          "title": "Length",
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        }
+      },
+      "title": "ArtifactReadQuery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "enum": [
+            "available",
+            "retiring",
+            "missing",
+            "corrupt",
+            "expired"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "media_type": {
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "retention": {
+          "$ref": "#/$defs/ArtifactRetention"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "sha256",
+        "size_bytes",
+        "media_type",
+        "availability",
+        "retention"
+      ],
+      "title": "ArtifactRef",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactResolutionEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "artifact",
+          "title": "Kind",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "artifact_id",
+        "sha256"
+      ],
+      "title": "ArtifactResolutionEvidence",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ArtifactRetention": {
+      "additionalProperties": false,
+      "properties": {
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expires At"
+        },
+        "explicit_keep": {
+          "title": "Explicit Keep",
+          "type": "boolean"
+        },
+        "keep_version": {
+          "minimum": 0,
+          "title": "Keep Version",
+          "type": "integer"
+        },
+        "pin_count": {
+          "minimum": 0,
+          "title": "Pin Count",
+          "type": "integer"
+        },
+        "policy_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Policy Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_version",
+        "expires_at",
+        "explicit_keep",
+        "keep_version",
+        "pin_count"
+      ],
+      "title": "ArtifactRetention",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Assignment": {
+      "additionalProperties": false,
+      "properties": {
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "policy_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "resource_adjustment_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resource Adjustment Id"
+        },
+        "worker_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Worker Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "worker_id",
+        "model_id",
+        "config_id",
+        "policy_version",
+        "reason",
+        "resource_adjustment_id"
+      ],
+      "title": "Assignment",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "AssignmentSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "worker_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Worker Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "worker_id",
+        "model_id",
+        "config_id"
+      ],
+      "title": "AssignmentSummary",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Attention": {
+      "additionalProperties": false,
+      "properties": {
+        "action_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Action Ref"
+        },
+        "code": {
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "resolvable_by": {
+          "enum": [
+            "lead",
+            "admin",
+            "reviewer",
+            "system"
+          ],
+          "title": "Resolvable By",
+          "type": "string"
+        },
+        "subject_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subject Ref"
+        }
+      },
+      "required": [
+        "code",
+        "detail",
+        "subject_ref",
+        "resolvable_by",
+        "action_ref"
+      ],
+      "title": "Attention",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "BindingView": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_source_ref": {
+          "minLength": 1,
+          "title": "Credential Source Ref",
+          "type": "string"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "grant_epoch": {
+          "minimum": 0,
+          "title": "Grant Epoch",
+          "type": "integer"
+        },
+        "notification_observation": {
+          "$ref": "#/$defs/NotificationObservation"
+        },
+        "principal_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "lead",
+            "reviewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "root_epoch": {
+          "minimum": 0,
+          "title": "Root Epoch",
+          "type": "integer"
+        },
+        "root_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Root Ref"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "role",
+        "root_ref",
+        "principal_id",
+        "version",
+        "grant_epoch",
+        "root_epoch",
+        "enabled",
+        "credential_source_ref",
+        "notification_observation"
+      ],
+      "title": "BindingView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CancelTaskRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "title": "CancelTaskRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CancelTaskResult": {
+      "additionalProperties": false,
+      "properties": {
+        "canceled": {
+          "title": "Canceled",
+          "type": "boolean"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "canceled"
+      ],
+      "title": "CancelTaskResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CandidateDeliverable": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "artifact"
+      ],
+      "title": "CandidateDeliverable",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CandidateView": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "code_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GitOid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "deliverables": {
+          "items": {
+            "$ref": "#/$defs/CandidateDeliverable"
+          },
+          "title": "Deliverables",
+          "type": "array"
+        },
+        "manifest": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "round": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Round",
+          "type": "integer"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "task_id",
+        "round",
+        "manifest",
+        "code_commit",
+        "deliverables",
+        "created_at"
+      ],
+      "title": "CandidateView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CatalogContent": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/CatalogMember"
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "title": "Members",
+          "type": "array"
+        },
+        "source_root_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Root Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_root_id",
+        "members",
+        "description"
+      ],
+      "title": "CatalogContent",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CatalogMember": {
+      "additionalProperties": false,
+      "properties": {
+        "relative_path": {
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relative_path",
+        "sha256"
+      ],
+      "title": "CatalogMember",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CatalogUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeTemplateDefinition"
+            },
+            {
+              "$ref": "#/$defs/ToolDefinition"
+            },
+            {
+              "$ref": "#/$defs/StdioMCPDefinition"
+            },
+            {
+              "$ref": "#/$defs/HttpMCPDefinition"
+            },
+            {
+              "$ref": "#/$defs/RecoveryPolicyDefinition"
+            }
+          ],
+          "title": "Definition"
+        },
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_version",
+        "definition"
+      ],
+      "title": "CatalogUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CatalogView": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "definition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeTemplateDefinition"
+            },
+            {
+              "$ref": "#/$defs/ToolDefinition"
+            },
+            {
+              "$ref": "#/$defs/StdioMCPDefinition"
+            },
+            {
+              "$ref": "#/$defs/HttpMCPDefinition"
+            },
+            {
+              "$ref": "#/$defs/RecoveryPolicyDefinition"
+            }
+          ],
+          "title": "Definition"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "native-template",
+            "tool",
+            "mcp",
+            "recovery-policy"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Readiness"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "version",
+        "content_sha256",
+        "readiness",
+        "definition"
+      ],
+      "title": "CatalogView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "reason"
+      ],
+      "title": "CheckResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CodeDeliveryObject": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_commit": {
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$",
+          "title": "Candidate Commit",
+          "type": "string"
+        },
+        "deliverable_key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Deliverable Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "deliverable_key",
+        "candidate_commit"
+      ],
+      "title": "CodeDeliveryObject",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CodeWorkerDelivery": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/WorkerArtifact"
+          },
+          "maxItems": 128,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/WorkerCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/$defs/CodeDeliveryObject"
+        },
+        "kind": {
+          "const": "code",
+          "title": "Kind",
+          "type": "string"
+        },
+        "known_limitations": {
+          "items": {
+            "maxLength": 16384,
+            "minLength": 1,
+            "type": "string",
+            "x-limit-status": "P-proposed",
+            "x-maxUtf8Bytes": 16384
+          },
+          "title": "Known Limitations",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "worker-delivery/1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "schema_version",
+        "summary",
+        "artifacts",
+        "checks",
+        "known_limitations",
+        "kind",
+        "code"
+      ],
+      "title": "CodeWorkerDelivery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CommandReply": {
+      "additionalProperties": false,
+      "properties": {
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        }
+      },
+      "required": [
+        "operation",
+        "meta"
+      ],
+      "title": "CommandReply",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ContentRetention": {
+      "additionalProperties": false,
+      "properties": {
+        "final_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Final Seconds"
+        },
+        "logs_workspace_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Logs Workspace Seconds"
+        },
+        "rejected_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rejected Seconds"
+        }
+      },
+      "required": [
+        "final_seconds",
+        "rejected_seconds",
+        "logs_workspace_seconds"
+      ],
+      "title": "ContentRetention",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Context": {
+      "additionalProperties": false,
+      "properties": {
+        "attention": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Attention",
+          "type": "array"
+        },
+        "capabilities": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "difficulty_scale": {
+          "$ref": "#/$defs/DifficultyScale"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "notification": {
+          "$ref": "#/$defs/NotificationObservation"
+        },
+        "principal": {
+          "$ref": "#/$defs/Principal"
+        },
+        "project": {
+          "$ref": "#/$defs/ProjectIdentity"
+        },
+        "recovery_policies": {
+          "items": {
+            "$ref": "#/$defs/FixedRef"
+          },
+          "title": "Recovery Policies",
+          "type": "array"
+        },
+        "service": {
+          "$ref": "#/$defs/ServiceObservation"
+        },
+        "worker_pool": {
+          "$ref": "#/$defs/WorkerPoolObservation"
+        }
+      },
+      "required": [
+        "project",
+        "principal",
+        "service",
+        "worker_pool",
+        "notification",
+        "capabilities",
+        "limits",
+        "difficulty_scale",
+        "recovery_policies",
+        "attention",
+        "meta"
+      ],
+      "title": "Context",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CredentialSourceUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "provider",
+            "mcp",
+            "notification"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "source": {
+          "discriminator": {
+            "mapping": {
+              "owner_file": "#/$defs/OwnerFileSource",
+              "private_value": "#/$defs/PrivateValueSource"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PrivateValueSource"
+            },
+            {
+              "$ref": "#/$defs/OwnerFileSource"
+            }
+          ],
+          "title": "Source"
+        }
+      },
+      "required": [
+        "expected_version",
+        "purpose",
+        "source",
+        "label"
+      ],
+      "title": "CredentialSourceUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CredentialSourceView": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_at": {
+          "format": "date-time",
+          "title": "Changed At",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "provider",
+            "mcp",
+            "notification"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "private_value",
+            "owner_file"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "configured",
+            "missing",
+            "unreadable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "purpose",
+        "label",
+        "source_kind",
+        "status",
+        "changed_at"
+      ],
+      "title": "CredentialSourceView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Criterion": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 8192,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 8192
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "Criterion",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "CriterionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "result": {
+          "enum": [
+            "met",
+            "unmet",
+            "unverified"
+          ],
+          "title": "Result",
+          "type": "string"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "result",
+        "reason",
+        "evidence_refs"
+      ],
+      "title": "CriterionResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DeferReview": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "reason_code": {
+          "enum": [
+            "CLIENT_INTERRUPTED",
+            "INPUT_UNAVAILABLE",
+            "ENVIRONMENT_UNAVAILABLE",
+            "OTHER"
+          ],
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "review_handle": {
+          "minLength": 1,
+          "title": "Review Handle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_handle",
+        "reason_code",
+        "reason"
+      ],
+      "title": "DeferReview",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DeferReviewResult": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "deferred": {
+          "const": true,
+          "title": "Deferred",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "deferred"
+      ],
+      "title": "DeferReviewResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Deliverable": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Key",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "code_commit",
+            "report",
+            "file"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "key",
+        "kind",
+        "description",
+        "required"
+      ],
+      "title": "Deliverable",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Dependency": {
+      "additionalProperties": false,
+      "description": "D/V1 shape; nonempty dependency lists are rejected by the V0 input.",
+      "properties": {
+        "mount_path": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mount Path"
+        },
+        "purpose": {
+          "enum": [
+            "gate",
+            "input"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DependencySelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "purpose",
+        "selector",
+        "mount_path"
+      ],
+      "title": "Dependency",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DependencySelector": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_key": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Artifact Key"
+        },
+        "kind": {
+          "enum": [
+            "passed_commit",
+            "artifact"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "artifact_key"
+      ],
+      "title": "DependencySelector",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Difficulty": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "description": "Range is determined by the registered scale, not hardcoded to 1–5.",
+          "title": "Level",
+          "type": "integer"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "scale_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Scale Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scale_id",
+        "level",
+        "reason"
+      ],
+      "title": "Difficulty",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DifficultyLevel": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "level": {
+          "title": "Level",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "level",
+        "description"
+      ],
+      "title": "DifficultyLevel",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DifficultyScale": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "levels": {
+          "items": {
+            "$ref": "#/$defs/DifficultyLevel"
+          },
+          "minItems": 1,
+          "title": "Levels",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "levels"
+      ],
+      "title": "DifficultyScale",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DifficultySummary": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "title": "Level",
+          "type": "integer"
+        },
+        "scale_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Scale Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scale_id",
+        "level"
+      ],
+      "title": "DifficultySummary",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DispatchResult": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking_reasons": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Blocking Reasons",
+          "type": "array"
+        },
+        "effective_paused": {
+          "title": "Effective Paused",
+          "type": "boolean"
+        },
+        "user_paused": {
+          "title": "User Paused",
+          "type": "boolean"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "user_paused",
+        "effective_paused",
+        "blocking_reasons",
+        "version"
+      ],
+      "title": "DispatchResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DispatchScope": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "instance",
+            "project"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Project Id"
+        }
+      },
+      "required": [
+        "kind",
+        "project_id"
+      ],
+      "title": "DispatchScope",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "DispatchUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "paused": {
+          "title": "Paused",
+          "type": "boolean"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "scope": {
+          "$ref": "#/$defs/DispatchScope"
+        }
+      },
+      "required": [
+        "expected_version",
+        "scope",
+        "paused"
+      ],
+      "title": "DispatchUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "EmptyReviewClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "reason": {
+          "enum": [
+            "queue_empty",
+            "review_paused",
+            "no_eligible_candidate"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "const": "empty",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "meta"
+      ],
+      "title": "EmptyReviewClaim",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "EnvironmentCredentialRef": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Credential Source Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "credential_source_id"
+      ],
+      "title": "EnvironmentCredentialRef",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "EvidenceReply": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_ref": {
+          "minLength": 1,
+          "title": "Activity Ref",
+          "type": "string"
+        },
+        "artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "operation_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact",
+        "operation_id",
+        "activity_ref",
+        "meta"
+      ],
+      "title": "EvidenceReply",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "EvidenceSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 262144,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index",
+        "artifact_id",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "EvidenceSegment",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "EvidenceUpload": {
+      "additionalProperties": false,
+      "properties": {
+        "content_base64": {
+          "title": "Content Base64",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "media_type": {
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "review_handle": {
+          "minLength": 1,
+          "title": "Review Handle",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_handle",
+        "name",
+        "kind",
+        "media_type",
+        "content_base64",
+        "sha256"
+      ],
+      "title": "EvidenceUpload",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutableDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "ExecutableDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutionConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "base_resources": {
+          "$ref": "#/$defs/ResourceVector"
+        },
+        "credential_source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Credential Source Id",
+          "type": "string"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "native_template_ref": {
+          "$ref": "#/$defs/FixedRef"
+        },
+        "parameters": {
+          "items": {
+            "$ref": "#/$defs/ModelParameter"
+          },
+          "title": "Parameters",
+          "type": "array"
+        },
+        "relay_url": {
+          "minLength": 1,
+          "title": "Relay Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relay_url",
+        "credential_source_id",
+        "model_id",
+        "parameters",
+        "native_template_ref",
+        "base_resources"
+      ],
+      "title": "ExecutionConfiguration",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutionInput": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_ordinal": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Candidate Ordinal",
+          "type": "integer"
+        },
+        "delivery_schema_ref": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Delivery Schema Ref",
+          "type": "string"
+        },
+        "delivery_target": {
+          "minLength": 1,
+          "title": "Delivery Target",
+          "type": "string"
+        },
+        "execution_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Execution Id",
+          "type": "string"
+        },
+        "launch_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Launch Id",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "initial",
+            "revision",
+            "resume_session",
+            "handoff_session",
+            "restart_same_contract"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "previous_candidate_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Candidate Ref"
+        },
+        "resolved_inputs_ref": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Resolved Inputs Ref",
+          "type": "string"
+        },
+        "resolved_inputs_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Resolved Inputs Sha256",
+          "type": "string"
+        },
+        "review_feedback_ref": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Review Feedback Ref"
+        },
+        "schema_version": {
+          "const": "execution-input/1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Ref"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "task_spec_ref": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Spec Ref",
+          "type": "string"
+        },
+        "task_spec_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Task Spec Sha256",
+          "type": "string"
+        },
+        "workspace": {
+          "$ref": "#/$defs/ExecutionWorkspace"
+        }
+      },
+      "required": [
+        "schema_version",
+        "task_id",
+        "execution_id",
+        "launch_id",
+        "task_spec_ref",
+        "task_spec_sha256",
+        "resolved_inputs_ref",
+        "resolved_inputs_sha256",
+        "mode",
+        "candidate_ordinal",
+        "workspace",
+        "previous_candidate_ref",
+        "review_feedback_ref",
+        "delivery_schema_ref",
+        "delivery_target",
+        "session_ref"
+      ],
+      "title": "ExecutionInput",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutionObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "execution_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Execution Id"
+        },
+        "observation": {
+          "enum": [
+            "none",
+            "preparing",
+            "active",
+            "interrupted",
+            "unknown",
+            "stopping",
+            "closed"
+          ],
+          "title": "Observation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "observation",
+        "execution_id"
+      ],
+      "title": "ExecutionObservation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutionRecoveryPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_attempts": {
+          "minimum": 0,
+          "title": "Automatic Attempts",
+          "type": "integer"
+        },
+        "backoff_seconds": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          "title": "Backoff Seconds",
+          "type": "array"
+        },
+        "execution_timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Execution Timeout Seconds",
+          "type": "integer"
+        },
+        "total_elapsed_seconds": {
+          "minimum": 0,
+          "title": "Total Elapsed Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_attempts",
+        "total_elapsed_seconds",
+        "execution_timeout_seconds",
+        "backoff_seconds"
+      ],
+      "title": "ExecutionRecoveryPolicy",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExecutionWorkspace": {
+      "additionalProperties": false,
+      "properties": {
+        "base_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GitOid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Repository Id"
+        }
+      },
+      "required": [
+        "path",
+        "repository_id",
+        "base_commit"
+      ],
+      "title": "ExecutionWorkspace",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ExternalReceiptEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "kind": {
+          "const": "external_receipt",
+          "title": "Kind",
+          "type": "string"
+        },
+        "observation": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Observation",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "receipt_id": {
+          "minLength": 1,
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "system": {
+          "minLength": 1,
+          "title": "System",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "system",
+        "receipt_id",
+        "checked_at",
+        "observation"
+      ],
+      "title": "ExternalReceiptEvidence",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "FieldError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "pointer": {
+          "title": "Pointer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pointer",
+        "code",
+        "detail"
+      ],
+      "title": "FieldError",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "FileInput": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "file",
+          "title": "Kind",
+          "type": "string"
+        },
+        "mount_path": {
+          "minLength": 1,
+          "title": "Mount Path",
+          "type": "string"
+        },
+        "relative_path": {
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "source_root_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Root Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "source_root_id",
+        "relative_path",
+        "sha256",
+        "mount_path"
+      ],
+      "title": "FileInput",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "FixedRef": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "FixedRef",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "GitInput": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/GitOid"
+        },
+        "kind": {
+          "const": "git",
+          "title": "Kind",
+          "type": "string"
+        },
+        "mount_path": {
+          "minLength": 1,
+          "title": "Mount Path",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "base",
+            "material"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "source_id",
+        "commit",
+        "mount_path",
+        "purpose"
+      ],
+      "title": "GitInput",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "GitOid": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "enum": [
+            "sha1",
+            "sha256"
+          ],
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "value": {
+          "pattern": "^[0-9a-f]+$",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "title": "GitOid",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "HealthReply": {
+      "additionalProperties": false,
+      "properties": {
+        "api_version": {
+          "const": "1",
+          "title": "Api Version",
+          "type": "string"
+        },
+        "release_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Release Id",
+          "type": "string"
+        },
+        "status": {
+          "const": "alive",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "release_id",
+        "api_version"
+      ],
+      "title": "HealthReply",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "HeldReviewClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate": {
+          "$ref": "#/$defs/CandidateView"
+        },
+        "evidence_index": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "lease_expires_at": {
+          "format": "date-time",
+          "title": "Lease Expires At",
+          "type": "string"
+        },
+        "materialization_manifest_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "max_hold_until": {
+          "format": "date-time",
+          "title": "Max Hold Until",
+          "type": "string"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "operation_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "review_handle": {
+          "minLength": 1,
+          "title": "Review Handle",
+          "type": "string"
+        },
+        "status": {
+          "const": "claimed",
+          "title": "Status",
+          "type": "string"
+        },
+        "task_spec": {
+          "$ref": "#/$defs/TaskSpec"
+        }
+      },
+      "required": [
+        "status",
+        "review_handle",
+        "candidate",
+        "task_spec",
+        "evidence_index",
+        "materialization_manifest_ref",
+        "lease_expires_at",
+        "max_hold_until",
+        "operation_id",
+        "meta"
+      ],
+      "title": "HeldReviewClaim",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "HttpMCPDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_source_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Credential Source Id"
+        },
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "transport": {
+          "const": "http",
+          "title": "Transport",
+          "type": "string"
+        },
+        "url": {
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transport",
+        "url",
+        "credential_source_id",
+        "description"
+      ],
+      "title": "HttpMCPDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "InboxEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "event_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Operation Id"
+        },
+        "summary": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "task_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Task Id"
+        }
+      },
+      "required": [
+        "event_id",
+        "kind",
+        "task_id",
+        "operation_id",
+        "summary",
+        "created_at"
+      ],
+      "title": "InboxEvent",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "InboxPage": {
+      "additionalProperties": false,
+      "properties": {
+        "attention": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "maxItems": 100,
+          "title": "Attention",
+          "type": "array"
+        },
+        "attention_next_cursor": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attention Next Cursor"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/InboxEvent"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor",
+        "attention",
+        "attention_next_cursor",
+        "meta"
+      ],
+      "title": "InboxPage",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "InboxQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_cursor": {
+          "minLength": 1,
+          "title": "Attention Cursor",
+          "type": "string"
+        },
+        "cursor": {
+          "minLength": 1,
+          "title": "Cursor",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "InboxQuery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "InputRoot": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "path"
+      ],
+      "title": "InputRoot",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "JsonValue": {},
+    "KnownUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "cache_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cache Tokens"
+        },
+        "coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Coverage",
+          "type": "number"
+        },
+        "input_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Input Tokens"
+        },
+        "output_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Output Tokens"
+        },
+        "reasoning_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reasoning Tokens"
+        },
+        "scope": {
+          "enum": [
+            "worker",
+            "all_roles",
+            "partial"
+          ],
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "cache_tokens",
+        "reasoning_tokens",
+        "coverage",
+        "scope"
+      ],
+      "title": "KnownUsage",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "LatencyStats": {
+      "additionalProperties": false,
+      "properties": {
+        "median_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Median Seconds"
+        },
+        "sample_count": {
+          "minimum": 0,
+          "title": "Sample Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sample_count",
+        "median_seconds"
+      ],
+      "title": "LatencyStats",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "values": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "description": "Named support-profile values; not arbitrary service actions.",
+          "title": "Values",
+          "type": "object"
+        },
+        "version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "values"
+      ],
+      "title": "Limits",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Meta": {
+      "additionalProperties": false,
+      "properties": {
+        "api_version": {
+          "const": "1",
+          "title": "Api Version",
+          "type": "string"
+        },
+        "instance_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Instance Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "observed_revision": {
+          "minimum": 0,
+          "title": "Observed Revision",
+          "type": "integer"
+        },
+        "store_epoch": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Store Epoch",
+          "type": "string"
+        }
+      },
+      "required": [
+        "api_version",
+        "instance_id",
+        "store_epoch",
+        "observed_at",
+        "observed_revision"
+      ],
+      "title": "Meta",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ModelParameter": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "ModelParameter",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ModelStat": {
+      "additionalProperties": false,
+      "properties": {
+        "canceled": {
+          "minimum": 0,
+          "title": "Canceled",
+          "type": "integer"
+        },
+        "completion_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Completion Rate"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/DifficultySummary"
+        },
+        "known_usage": {
+          "$ref": "#/$defs/KnownUsage"
+        },
+        "latency": {
+          "$ref": "#/$defs/LatencyStats"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "passed": {
+          "minimum": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "review_failed": {
+          "minimum": 0,
+          "title": "Review Failed",
+          "type": "integer"
+        },
+        "routing": {
+          "$ref": "#/$defs/RoutingExplanation"
+        },
+        "unfinished": {
+          "$ref": "#/$defs/UnfinishedCounts"
+        }
+      },
+      "required": [
+        "model_id",
+        "difficulty",
+        "passed",
+        "review_failed",
+        "canceled",
+        "unfinished",
+        "completion_rate",
+        "known_usage",
+        "latency",
+        "routing"
+      ],
+      "title": "ModelStat",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ModelStatsPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ModelStat"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor",
+        "meta"
+      ],
+      "title": "ModelStatsPage",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ModelStatsQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "minLength": 1,
+          "title": "Cursor",
+          "type": "string"
+        },
+        "difficulty_level": {
+          "title": "Difficulty Level",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        }
+      },
+      "title": "ModelStatsQuery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "NativeTemplateDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/CatalogMember"
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "title": "Members",
+          "type": "array"
+        },
+        "settings_entry": {
+          "minLength": 1,
+          "title": "Settings Entry",
+          "type": "string"
+        },
+        "source_root_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Root Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_root_id",
+        "members",
+        "description",
+        "settings_entry"
+      ],
+      "title": "NativeTemplateDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "NextReviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "preferred_candidate_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Preferred Candidate Id",
+          "type": "string"
+        }
+      },
+      "title": "NextReviewRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "NextReviewResult": {
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "$ref": "#/$defs/ReviewClaim"
+        }
+      },
+      "required": [
+        "claim"
+      ],
+      "title": "NextReviewResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "NotificationObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "configured": {
+          "title": "Configured",
+          "type": "boolean"
+        },
+        "status": {
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        },
+        "verified": {
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "configured",
+        "verified",
+        "status"
+      ],
+      "title": "NotificationObservation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "attention": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Attention",
+          "type": "array"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "submit_task",
+            "resume_task",
+            "cancel_task",
+            "next_review",
+            "submit_review",
+            "defer_review",
+            "upload_review_evidence",
+            "renew_review",
+            "save_project",
+            "save_credential_source",
+            "save_worker",
+            "set_dispatch",
+            "set_role_binding",
+            "check_worker",
+            "save_catalog",
+            "set_task_resources",
+            "set_artifact_keep"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "completed",
+            "waiting",
+            "failed"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "problem": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Problem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request_key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Request Key",
+          "type": "string"
+        },
+        "resource_refs": {
+          "items": {
+            "$ref": "#/$defs/ResourceRef"
+          },
+          "title": "Resource Refs",
+          "type": "array"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SubmitTaskResult"
+            },
+            {
+              "$ref": "#/$defs/ResumeTaskResult"
+            },
+            {
+              "$ref": "#/$defs/CancelTaskResult"
+            },
+            {
+              "$ref": "#/$defs/NextReviewResult"
+            },
+            {
+              "$ref": "#/$defs/SubmitReviewResult"
+            },
+            {
+              "$ref": "#/$defs/DeferReviewResult"
+            },
+            {
+              "$ref": "#/$defs/UploadReviewEvidenceResult"
+            },
+            {
+              "$ref": "#/$defs/RenewReviewResult"
+            },
+            {
+              "$ref": "#/$defs/SaveProjectResult"
+            },
+            {
+              "$ref": "#/$defs/CredentialSourceView"
+            },
+            {
+              "$ref": "#/$defs/SaveWorkerResult"
+            },
+            {
+              "$ref": "#/$defs/DispatchResult"
+            },
+            {
+              "$ref": "#/$defs/RoleBindingResult"
+            },
+            {
+              "$ref": "#/$defs/WorkerCheckResult"
+            },
+            {
+              "$ref": "#/$defs/SaveCatalogResult"
+            },
+            {
+              "$ref": "#/$defs/ResourceOverrideResult"
+            },
+            {
+              "$ref": "#/$defs/ArtifactKeepResult"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Result"
+        },
+        "scope": {
+          "$ref": "#/$defs/OperationScope"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id",
+        "kind",
+        "scope",
+        "request_key",
+        "phase",
+        "version",
+        "created_at",
+        "updated_at",
+        "resource_refs",
+        "result",
+        "attention",
+        "problem"
+      ],
+      "title": "Operation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "OperationScope": {
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Project Id"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "title": "OperationScope",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "OperationSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "submit_task",
+            "resume_task",
+            "cancel_task",
+            "next_review",
+            "submit_review",
+            "defer_review",
+            "upload_review_evidence",
+            "renew_review",
+            "save_project",
+            "save_credential_source",
+            "save_worker",
+            "set_dispatch",
+            "set_role_binding",
+            "check_worker",
+            "save_catalog",
+            "set_task_resources",
+            "set_artifact_keep"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "completed",
+            "waiting",
+            "failed"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id",
+        "kind",
+        "phase",
+        "version",
+        "updated_at"
+      ],
+      "title": "OperationSummary",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "OperatorStatementEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "operator_statement",
+          "title": "Kind",
+          "type": "string"
+        },
+        "statement": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "kind",
+        "statement"
+      ],
+      "title": "OperatorStatementEvidence",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "OwnerFileSource": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "owner_file",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "path"
+      ],
+      "title": "OwnerFileSource",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "PageQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "minLength": 1,
+          "title": "Cursor",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "PageQuery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Principal": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "lead",
+            "reviewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "title": "Principal",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "PrivateValueSource": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "private_value",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "PrivateValueSource",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Problem": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "field_errors": {
+          "items": {
+            "$ref": "#/$defs/FieldError"
+          },
+          "title": "Field Errors",
+          "type": "array"
+        },
+        "instance": {
+          "minLength": 1,
+          "title": "Instance",
+          "type": "string"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Operation Id"
+        },
+        "request_recorded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Request Recorded"
+        },
+        "retry": {
+          "enum": [
+            "never",
+            "same_request",
+            "refresh_then_new_request",
+            "query_request"
+          ],
+          "title": "Retry",
+          "type": "string"
+        },
+        "status": {
+          "maximum": 599,
+          "minimum": 400,
+          "title": "Status",
+          "type": "integer"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "instance",
+        "code",
+        "retry",
+        "operation_id",
+        "request_recorded",
+        "field_errors"
+      ],
+      "title": "Problem",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ProjectDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "content_retention": {
+          "$ref": "#/$defs/ContentRetention"
+        },
+        "default_requirements": {
+          "$ref": "#/$defs/Requirements"
+        },
+        "input_roots": {
+          "items": {
+            "$ref": "#/$defs/InputRoot"
+          },
+          "title": "Input Roots",
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "recovery_policy_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FixedRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RepositoryDefinition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shared_resource_registry": {
+          "items": {
+            "$ref": "#/$defs/SharedResourceDefinition"
+          },
+          "title": "Shared Resource Registry",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "repository",
+        "input_roots",
+        "default_requirements",
+        "recovery_policy_ref",
+        "shared_resource_registry"
+      ],
+      "title": "ProjectDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ProjectIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "ProjectIdentity",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ProjectImpact": {
+      "additionalProperties": false,
+      "properties": {
+        "bound_tasks": {
+          "title": "Bound Tasks",
+          "type": "boolean"
+        },
+        "future_tasks": {
+          "title": "Future Tasks",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "future_tasks",
+        "bound_tasks"
+      ],
+      "title": "ProjectImpact",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ProjectUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "content_retention": {
+          "$ref": "#/$defs/ContentRetention"
+        },
+        "default_requirements": {
+          "$ref": "#/$defs/Requirements"
+        },
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "input_roots": {
+          "items": {
+            "$ref": "#/$defs/InputRoot"
+          },
+          "title": "Input Roots",
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "recovery_policy_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FixedRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RepositoryDefinition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shared_resource_registry": {
+          "items": {
+            "$ref": "#/$defs/SharedResourceDefinition"
+          },
+          "title": "Shared Resource Registry",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "repository",
+        "input_roots",
+        "default_requirements",
+        "recovery_policy_ref",
+        "shared_resource_registry",
+        "expected_version"
+      ],
+      "title": "ProjectUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ProjectView": {
+      "additionalProperties": false,
+      "properties": {
+        "content_retention": {
+          "$ref": "#/$defs/ContentRetention"
+        },
+        "default_requirements": {
+          "$ref": "#/$defs/Requirements"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "input_roots": {
+          "items": {
+            "$ref": "#/$defs/InputRoot"
+          },
+          "title": "Input Roots",
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Readiness"
+        },
+        "recovery_policy_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FixedRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RepositoryDefinition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_identity": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Repository Identity"
+        },
+        "shared_resource_registry": {
+          "items": {
+            "$ref": "#/$defs/SharedResourceDefinition"
+          },
+          "title": "Shared Resource Registry",
+          "type": "array"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "repository",
+        "input_roots",
+        "default_requirements",
+        "recovery_policy_ref",
+        "shared_resource_registry",
+        "content_retention",
+        "id",
+        "version",
+        "repository_identity",
+        "readiness"
+      ],
+      "title": "ProjectView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Readiness": {
+      "additionalProperties": false,
+      "properties": {
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "ready",
+            "unavailable",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "reasons",
+        "observed_at"
+      ],
+      "title": "Readiness",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RecoveryPolicyDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "check_timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Check Timeout Seconds",
+          "type": "integer"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionRecoveryPolicy"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewRecoveryPolicy"
+        }
+      },
+      "required": [
+        "execution",
+        "review",
+        "check_timeout_seconds"
+      ],
+      "title": "RecoveryPolicyDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RenewReviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_ref": {
+          "minLength": 1,
+          "title": "Activity Ref",
+          "type": "string"
+        },
+        "review_handle": {
+          "minLength": 1,
+          "title": "Review Handle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_handle",
+        "activity_ref"
+      ],
+      "title": "RenewReviewRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RenewReviewResult": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "lease_expires_at": {
+          "format": "date-time",
+          "title": "Lease Expires At",
+          "type": "string"
+        },
+        "max_hold_until": {
+          "format": "date-time",
+          "title": "Max Hold Until",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "lease_expires_at",
+        "max_hold_until"
+      ],
+      "title": "RenewReviewResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReportWorkerDelivery": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/WorkerArtifact"
+          },
+          "maxItems": 128,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/WorkerCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "kind": {
+          "const": "report",
+          "title": "Kind",
+          "type": "string"
+        },
+        "known_limitations": {
+          "items": {
+            "maxLength": 16384,
+            "minLength": 1,
+            "type": "string",
+            "x-limit-status": "P-proposed",
+            "x-maxUtf8Bytes": 16384
+          },
+          "title": "Known Limitations",
+          "type": "array"
+        },
+        "report_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Report Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "worker-delivery/1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "schema_version",
+        "summary",
+        "artifacts",
+        "checks",
+        "known_limitations",
+        "kind",
+        "report_name"
+      ],
+      "title": "ReportWorkerDelivery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RepositoryDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "review_export": {
+          "const": "reachable_history",
+          "title": "Review Export",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "path",
+        "review_export"
+      ],
+      "title": "RepositoryDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Requirements": {
+      "additionalProperties": false,
+      "properties": {
+        "mcp_refs": {
+          "items": {
+            "$ref": "#/$defs/FixedRef"
+          },
+          "title": "Mcp Refs",
+          "type": "array"
+        },
+        "shared_resources": {
+          "items": {
+            "$ref": "#/$defs/ResourceRequirement"
+          },
+          "title": "Shared Resources",
+          "type": "array"
+        },
+        "tool_refs": {
+          "items": {
+            "$ref": "#/$defs/FixedRef"
+          },
+          "title": "Tool Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tool_refs",
+        "mcp_refs",
+        "shared_resources"
+      ],
+      "title": "Requirements",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "Resolution": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "enum": [
+            "not_applied",
+            "already_applied",
+            "safe_to_repeat",
+            "compensated",
+            "environment_repaired",
+            "restart_from_fixed_inputs"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "artifact": "#/$defs/ArtifactResolutionEvidence",
+                "external_receipt": "#/$defs/ExternalReceiptEvidence",
+                "operator_statement": "#/$defs/OperatorStatementEvidence"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ArtifactResolutionEvidence"
+              },
+              {
+                "$ref": "#/$defs/ExternalReceiptEvidence"
+              },
+              {
+                "$ref": "#/$defs/OperatorStatementEvidence"
+              }
+            ]
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "issue_ref": {
+          "minLength": 1,
+          "title": "Issue Ref",
+          "type": "string"
+        },
+        "note": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Note",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "issue_ref",
+        "decision",
+        "note",
+        "evidence"
+      ],
+      "title": "Resolution",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResolutionRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_decisions": {
+          "items": {
+            "enum": [
+              "not_applied",
+              "already_applied",
+              "safe_to_repeat",
+              "compensated",
+              "environment_repaired",
+              "restart_from_fixed_inputs"
+            ],
+            "type": "string"
+          },
+          "title": "Allowed Decisions",
+          "type": "array"
+        },
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "evidence_required": {
+          "title": "Evidence Required",
+          "type": "boolean"
+        },
+        "issue_ref": {
+          "minLength": 1,
+          "title": "Issue Ref",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "external_effect",
+            "environment_check",
+            "progress_loss"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issue_ref",
+        "kind",
+        "description",
+        "allowed_decisions",
+        "evidence_required"
+      ],
+      "title": "ResolutionRequirement",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResolvedInputsView": {
+      "additionalProperties": false,
+      "properties": {
+        "base_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GitOid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "manifest": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "manifest",
+        "base_commit"
+      ],
+      "title": "ResolvedInputsView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceOverrideResult": {
+      "additionalProperties": false,
+      "properties": {
+        "effective_from": {
+          "const": "next_execution",
+          "title": "Effective From",
+          "type": "string"
+        },
+        "override_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Override Id",
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/$defs/ResourceVector"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_id",
+        "override_id",
+        "version",
+        "effective_from",
+        "resources"
+      ],
+      "title": "ResourceOverrideResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceOverrideUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "resources": {
+          "$ref": "#/$defs/ResourceVector"
+        }
+      },
+      "required": [
+        "expected_version",
+        "resources",
+        "reason"
+      ],
+      "title": "ResourceOverrideUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceOverrideView": {
+      "additionalProperties": false,
+      "properties": {
+        "override_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Override Id"
+        },
+        "resources": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResourceVector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version",
+        "override_id",
+        "resources"
+      ],
+      "title": "ResourceOverrideView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "title": "ResourceRef",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "access_mode": {
+          "enum": [
+            "read",
+            "write"
+          ],
+          "title": "Access Mode",
+          "type": "string"
+        },
+        "resource_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Resource Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_id",
+        "access_mode"
+      ],
+      "title": "ResourceRequirement",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResourceVector": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_quota": {
+          "description": "Percent of one logical CPU; 100 means one CPU.",
+          "exclusiveMinimum": 0,
+          "title": "Cpu Quota",
+          "type": "number"
+        },
+        "memory_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Memory Bytes",
+          "type": "integer"
+        },
+        "pids": {
+          "exclusiveMinimum": 0,
+          "title": "Pids",
+          "type": "integer"
+        },
+        "swap_bytes": {
+          "minimum": 0,
+          "title": "Swap Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cpu_quota",
+        "memory_bytes",
+        "pids",
+        "swap_bytes"
+      ],
+      "title": "ResourceVector",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResumeTaskRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "action_ref": {
+          "minLength": 1,
+          "title": "Action Ref",
+          "type": "string"
+        },
+        "resolutions": {
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          },
+          "title": "Resolutions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action_ref"
+      ],
+      "title": "ResumeTaskRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ResumeTaskResult": {
+      "additionalProperties": false,
+      "properties": {
+        "execution_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Execution Id"
+        },
+        "recovery_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Recovery Id",
+          "type": "string"
+        },
+        "review_reopened": {
+          "title": "Review Reopened",
+          "type": "boolean"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "recovery_id",
+        "execution_id",
+        "review_reopened"
+      ],
+      "title": "ResumeTaskResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewClaim": {
+      "discriminator": {
+        "mapping": {
+          "claimed": "#/$defs/HeldReviewClaim",
+          "empty": "#/$defs/EmptyReviewClaim"
+        },
+        "propertyName": "status"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/EmptyReviewClaim"
+        },
+        {
+          "$ref": "#/$defs/HeldReviewClaim"
+        }
+      ],
+      "title": "ReviewClaim",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_results": {
+          "items": {
+            "$ref": "#/$defs/CriterionResult"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Criterion Results",
+          "type": "array"
+        },
+        "evidence_refs": {
+          "items": {
+            "$ref": "#/$defs/ReviewEvidenceRef"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "review_handle": {
+          "minLength": 1,
+          "title": "Review Handle",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "REJECT"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_handle",
+        "verdict",
+        "reason",
+        "evidence_refs",
+        "criterion_results"
+      ],
+      "title": "ReviewDecision",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewEvidenceManifest": {
+      "additionalProperties": false,
+      "description": "D: validates metadata; actual concatenated bytes must be checked by ArtifactStore.",
+      "properties": {
+        "members": {
+          "items": {
+            "$ref": "#/$defs/EvidenceSegment"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Members",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "review-evidence/1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "total_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Total Sha256",
+          "type": "string"
+        },
+        "total_size_bytes": {
+          "maximum": 16777216,
+          "minimum": 0,
+          "title": "Total Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "members",
+        "total_size_bytes",
+        "total_sha256"
+      ],
+      "title": "ReviewEvidenceManifest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewEvidenceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "sha256"
+      ],
+      "title": "ReviewEvidenceRef",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Candidate Id"
+        },
+        "observation": {
+          "enum": [
+            "none",
+            "queued",
+            "leased",
+            "paused",
+            "unavailable"
+          ],
+          "title": "Observation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "observation",
+        "candidate_id"
+      ],
+      "title": "ReviewObservation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ReviewRecoveryPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_reclaims": {
+          "minimum": 0,
+          "title": "Automatic Reclaims",
+          "type": "integer"
+        },
+        "backoff_seconds": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          "title": "Backoff Seconds",
+          "type": "array"
+        },
+        "total_elapsed_seconds": {
+          "minimum": 0,
+          "title": "Total Elapsed Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_reclaims",
+        "total_elapsed_seconds",
+        "backoff_seconds"
+      ],
+      "title": "ReviewRecoveryPolicy",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RoleBindingResult": {
+      "additionalProperties": false,
+      "properties": {
+        "connection_alias": {
+          "minLength": 1,
+          "title": "Connection Alias",
+          "type": "string"
+        },
+        "credential_source_ref": {
+          "minLength": 1,
+          "title": "Credential Source Ref",
+          "type": "string"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "grant_epoch": {
+          "minimum": 0,
+          "title": "Grant Epoch",
+          "type": "integer"
+        },
+        "principal_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "root_epoch": {
+          "minimum": 0,
+          "title": "Root Epoch",
+          "type": "integer"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "principal_id",
+        "version",
+        "grant_epoch",
+        "root_epoch",
+        "connection_alias",
+        "credential_source_ref",
+        "enabled"
+      ],
+      "title": "RoleBindingResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RoleBindingUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "root_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Root Ref"
+        }
+      },
+      "required": [
+        "expected_version",
+        "enabled",
+        "root_ref"
+      ],
+      "title": "RoleBindingUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "RoutingExplanation": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "random",
+            "capability"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "policy_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "mode",
+        "reason",
+        "policy_version"
+      ],
+      "title": "RoutingExplanation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SaveCatalogResult": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "native-template",
+            "tool",
+            "mcp",
+            "recovery-policy"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Readiness"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "version",
+        "content_sha256",
+        "readiness"
+      ],
+      "title": "SaveCatalogResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SaveProjectResult": {
+      "additionalProperties": false,
+      "properties": {
+        "impact": {
+          "$ref": "#/$defs/ProjectImpact"
+        },
+        "resource_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "resource_id",
+        "version",
+        "impact"
+      ],
+      "title": "SaveProjectResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SaveWorkerResult": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_tasks": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Affected Tasks",
+          "type": "array"
+        },
+        "attention": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Attention",
+          "type": "array"
+        },
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        },
+        "slot_version": {
+          "exclusiveMinimum": 0,
+          "title": "Slot Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "config_id",
+        "slot_version",
+        "affected_tasks",
+        "attention"
+      ],
+      "title": "SaveWorkerResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ServiceObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "dispatch_paused": {
+          "title": "Dispatch Paused",
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "ready",
+            "maintenance",
+            "degraded"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "dispatch_paused"
+      ],
+      "title": "ServiceObservation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SessionCreate": {
+      "additionalProperties": false,
+      "properties": {
+        "credential": {
+          "minLength": 1,
+          "title": "Credential",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "credential"
+      ],
+      "title": "SessionCreate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SessionIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "expires_at": {
+          "format": "date-time",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "principal_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "principal_id",
+        "expires_at"
+      ],
+      "title": "SessionIdentity",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SessionReply": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "minLength": 1,
+          "title": "Csrf Token",
+          "type": "string"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionIdentity"
+        }
+      },
+      "required": [
+        "session",
+        "csrf_token",
+        "meta"
+      ],
+      "title": "SessionReply",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SharedResourceDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_identity": {
+          "minLength": 1,
+          "title": "Canonical Identity",
+          "type": "string"
+        },
+        "isolation_mode": {
+          "enum": [
+            "namespace",
+            "exclusive",
+            "shared_read"
+          ],
+          "title": "Isolation Mode",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "port",
+            "database",
+            "service",
+            "cache"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "namespace_rule": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Namespace Rule"
+        },
+        "resource_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "instance",
+            "project",
+            "external"
+          ],
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_id",
+        "scope",
+        "kind",
+        "canonical_identity",
+        "isolation_mode",
+        "namespace_rule"
+      ],
+      "title": "SharedResourceDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "StdioMCPDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "args": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Args",
+          "type": "array"
+        },
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "environment_refs": {
+          "items": {
+            "$ref": "#/$defs/EnvironmentCredentialRef"
+          },
+          "title": "Environment Refs",
+          "type": "array"
+        },
+        "executable": {
+          "$ref": "#/$defs/ExecutableDefinition"
+        },
+        "tool_refs": {
+          "items": {
+            "$ref": "#/$defs/FixedRef"
+          },
+          "title": "Tool Refs",
+          "type": "array"
+        },
+        "transport": {
+          "const": "stdio",
+          "title": "Transport",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transport",
+        "executable",
+        "args",
+        "environment_refs",
+        "tool_refs",
+        "description"
+      ],
+      "title": "StdioMCPDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SubmitReviewResult": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "committed_task_version": {
+          "minimum": 0,
+          "title": "Committed Task Version",
+          "type": "integer"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "passed",
+                "review_failed"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome"
+        },
+        "rejections": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Rejections",
+          "type": "integer"
+        },
+        "review_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Review Id",
+          "type": "string"
+        },
+        "task_status": {
+          "enum": [
+            "queued",
+            "running",
+            "reviewing",
+            "finished",
+            "canceled"
+          ],
+          "title": "Task Status",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "REJECT"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_id",
+        "candidate_id",
+        "verdict",
+        "task_status",
+        "outcome",
+        "rejections",
+        "committed_task_version"
+      ],
+      "title": "SubmitReviewResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SubmitTaskRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "spec": {
+          "$ref": "#/$defs/TaskSpecInput"
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "title": "SubmitTaskRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "SubmitTaskResult": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id"
+      ],
+      "title": "SubmitTaskResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "assignment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Assignment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CandidateView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_history_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArtifactRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "related_tasks": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Related Tasks",
+          "type": "array"
+        },
+        "resolved_inputs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResolvedInputsView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resource_override": {
+          "$ref": "#/$defs/ResourceOverrideView"
+        },
+        "spec": {
+          "$ref": "#/$defs/TaskSpec"
+        },
+        "summary": {
+          "$ref": "#/$defs/TaskSummary"
+        }
+      },
+      "required": [
+        "summary",
+        "spec",
+        "resolved_inputs",
+        "assignment",
+        "resource_override",
+        "current_candidate",
+        "execution_history_ref",
+        "artifacts",
+        "related_tasks",
+        "meta"
+      ],
+      "title": "TaskDetail",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskListQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "minLength": 1,
+          "title": "Cursor",
+          "type": "string"
+        },
+        "difficulty_level": {
+          "title": "Difficulty Level",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "model_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "review_failed"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "reviewing",
+            "finished",
+            "canceled"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "title": "TaskListQuery",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/TaskSummary"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor",
+        "meta"
+      ],
+      "title": "TaskPage",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskScope": {
+      "additionalProperties": false,
+      "properties": {
+        "exclude": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Exclude",
+          "type": "array"
+        },
+        "include": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Include",
+          "type": "array"
+        }
+      },
+      "required": [
+        "include",
+        "exclude"
+      ],
+      "title": "TaskScope",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskSpec": {
+      "additionalProperties": false,
+      "description": "Effective immutable TaskSpec: defaults were resolved by the submit service.",
+      "properties": {
+        "acceptance": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Acceptance",
+          "type": "array"
+        },
+        "deliverables": {
+          "items": {
+            "$ref": "#/$defs/Deliverable"
+          },
+          "minItems": 1,
+          "title": "Deliverables",
+          "type": "array"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "maxItems": 0,
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/Difficulty"
+        },
+        "goal": {
+          "maxLength": 131072,
+          "minLength": 1,
+          "title": "Goal",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 131072
+        },
+        "inputs": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "artifact": "#/$defs/ArtifactInput",
+                "file": "#/$defs/FileInput",
+                "git": "#/$defs/GitInput"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/GitInput"
+              },
+              {
+                "$ref": "#/$defs/FileInput"
+              },
+              {
+                "$ref": "#/$defs/ArtifactInput"
+              }
+            ]
+          },
+          "maxItems": 128,
+          "title": "Inputs",
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "code",
+            "report"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "project_config_ref": {
+          "$ref": "#/$defs/FixedRef"
+        },
+        "recovery_policy_ref": {
+          "$ref": "#/$defs/FixedRef"
+        },
+        "related_task_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Related Task Id"
+        },
+        "requirements": {
+          "$ref": "#/$defs/Requirements"
+        },
+        "schema_version": {
+          "const": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/TaskScope"
+        },
+        "title": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "title",
+        "goal",
+        "scope",
+        "difficulty",
+        "inputs",
+        "acceptance",
+        "deliverables",
+        "requirements",
+        "recovery_policy_ref",
+        "dependencies",
+        "related_task_id",
+        "project_config_ref"
+      ],
+      "title": "TaskSpec",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskSpecInput": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Acceptance",
+          "type": "array"
+        },
+        "deliverables": {
+          "items": {
+            "$ref": "#/$defs/Deliverable"
+          },
+          "minItems": 1,
+          "title": "Deliverables",
+          "type": "array"
+        },
+        "dependencies": {
+          "description": "V0 supports independent tasks.",
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "maxItems": 0,
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/Difficulty"
+        },
+        "goal": {
+          "maxLength": 131072,
+          "minLength": 1,
+          "title": "Goal",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 131072
+        },
+        "inputs": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "artifact": "#/$defs/ArtifactInput",
+                "file": "#/$defs/FileInput",
+                "git": "#/$defs/GitInput"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/GitInput"
+              },
+              {
+                "$ref": "#/$defs/FileInput"
+              },
+              {
+                "$ref": "#/$defs/ArtifactInput"
+              }
+            ]
+          },
+          "maxItems": 128,
+          "title": "Inputs",
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "code",
+            "report"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "recovery_policy_ref": {
+          "$ref": "#/$defs/FixedRef",
+          "title": "Recovery Policy Ref"
+        },
+        "related_task_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Related Task Id"
+        },
+        "requirements": {
+          "$ref": "#/$defs/Requirements"
+        },
+        "schema_version": {
+          "const": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/TaskScope"
+        },
+        "title": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "title",
+        "goal",
+        "scope",
+        "difficulty",
+        "inputs",
+        "acceptance",
+        "deliverables"
+      ],
+      "title": "TaskSpecInput",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "TaskSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "actions": {
+          "items": {
+            "$ref": "#/$defs/Action"
+          },
+          "title": "Actions",
+          "type": "array"
+        },
+        "assignment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssignmentSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attention": {
+          "items": {
+            "$ref": "#/$defs/Attention"
+          },
+          "title": "Attention",
+          "type": "array"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/DifficultySummary"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionObservation"
+        },
+        "kind": {
+          "enum": [
+            "code",
+            "report"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "passed",
+                "review_failed"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewObservation"
+        },
+        "review_rejections": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Review Rejections",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "reviewing",
+            "finished",
+            "canceled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "task_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 512
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_id",
+        "title",
+        "kind",
+        "status",
+        "outcome",
+        "version",
+        "difficulty",
+        "review_rejections",
+        "assignment",
+        "execution",
+        "review",
+        "attention",
+        "actions",
+        "created_at",
+        "updated_at"
+      ],
+      "title": "TaskSummary",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "ToolDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        },
+        "entrypoint": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Entrypoint"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/CatalogMember"
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "title": "Members",
+          "type": "array"
+        },
+        "source_root_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Source Root Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_root_id",
+        "members",
+        "description",
+        "entrypoint"
+      ],
+      "title": "ToolDefinition",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "UnfinishedCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "interrupted": {
+          "description": "Observation subset, not a fourth additive task phase.",
+          "minimum": 0,
+          "title": "Interrupted",
+          "type": "integer"
+        },
+        "queued": {
+          "minimum": 0,
+          "title": "Queued",
+          "type": "integer"
+        },
+        "reviewing": {
+          "minimum": 0,
+          "title": "Reviewing",
+          "type": "integer"
+        },
+        "running": {
+          "minimum": 0,
+          "title": "Running",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "queued",
+        "running",
+        "reviewing",
+        "interrupted"
+      ],
+      "title": "UnfinishedCounts",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "UploadReviewEvidenceResult": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_ref": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Activity Ref"
+        },
+        "artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "artifact",
+        "activity_ref"
+      ],
+      "title": "UploadReviewEvidenceResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "media_type": {
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "relative_path": {
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "relative_path",
+        "kind",
+        "media_type"
+      ],
+      "title": "WorkerArtifact",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_names": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Evidence Names",
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_run"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "evidence_names"
+      ],
+      "title": "WorkerCheck",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerCheckRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "static",
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "config_id",
+        "kind"
+      ],
+      "title": "WorkerCheckRequest",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerCheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/CheckResult"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "config_id",
+        "checked_at",
+        "checks"
+      ],
+      "title": "WorkerCheckResult",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerDelivery": {
+      "discriminator": {
+        "mapping": {
+          "code": "#/$defs/CodeWorkerDelivery",
+          "report": "#/$defs/ReportWorkerDelivery"
+        },
+        "propertyName": "kind"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CodeWorkerDelivery"
+        },
+        {
+          "$ref": "#/$defs/ReportWorkerDelivery"
+        }
+      ],
+      "title": "WorkerDelivery",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerDeliveryBase": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/WorkerArtifact"
+          },
+          "maxItems": 128,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/WorkerCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "known_limitations": {
+          "items": {
+            "maxLength": 16384,
+            "minLength": 1,
+            "type": "string",
+            "x-limit-status": "P-proposed",
+            "x-maxUtf8Bytes": 16384
+          },
+          "title": "Known Limitations",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "worker-delivery/1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string",
+          "x-limit-status": "P-proposed",
+          "x-maxUtf8Bytes": 16384
+        }
+      },
+      "required": [
+        "schema_version",
+        "summary",
+        "artifacts",
+        "checks",
+        "known_limitations"
+      ],
+      "title": "WorkerDeliveryBase",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerPoolObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "busy": {
+          "minimum": 0,
+          "title": "Busy",
+          "type": "integer"
+        },
+        "configured": {
+          "title": "Configured",
+          "type": "boolean"
+        },
+        "eligible": {
+          "minimum": 0,
+          "title": "Eligible",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "configured",
+        "eligible",
+        "busy"
+      ],
+      "title": "WorkerPoolObservation",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "admission_mode": {
+          "enum": [
+            "enabled",
+            "draining",
+            "disabled"
+          ],
+          "title": "Admission Mode",
+          "type": "string"
+        },
+        "configuration": {
+          "$ref": "#/$defs/ExecutionConfiguration"
+        },
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        },
+        "retire_requested": {
+          "title": "Retire Requested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expected_version",
+        "admission_mode",
+        "retire_requested",
+        "configuration"
+      ],
+      "title": "WorkerUpdate",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    },
+    "WorkerView": {
+      "additionalProperties": false,
+      "properties": {
+        "admission_mode": {
+          "enum": [
+            "enabled",
+            "draining",
+            "disabled"
+          ],
+          "title": "Admission Mode",
+          "type": "string"
+        },
+        "bound_unfinished_tasks": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "type": "string"
+          },
+          "title": "Bound Unfinished Tasks",
+          "type": "array"
+        },
+        "config_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Config Id",
+          "type": "string"
+        },
+        "configuration": {
+          "$ref": "#/$defs/ExecutionConfiguration"
+        },
+        "effective_config_observation": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Effective Config Observation",
+          "type": "object"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "occupied_by": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Occupied By"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Readiness"
+        },
+        "retire_requested": {
+          "title": "Retire Requested",
+          "type": "boolean"
+        },
+        "retired": {
+          "title": "Retired",
+          "type": "boolean"
+        },
+        "slot_version": {
+          "exclusiveMinimum": 0,
+          "title": "Slot Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "admission_mode",
+        "retire_requested",
+        "retired",
+        "configuration",
+        "slot_version",
+        "config_id",
+        "effective_config_observation",
+        "occupied_by",
+        "bound_unfinished_tasks",
+        "readiness"
+      ],
+      "title": "WorkerView",
+      "type": "object",
+      "x-decision-status": "D-proposed",
+      "x-parameter-status": "P-proposed-not-approved"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "[D 待评审] 从零开发的 V0 拟议接口合同，尚非在线 API 或实现声明。[P 待选参数] 所列初值用于离线校验与评审，不代表已批准的产品默认值。由 specs/agentd_v1/models.py 与 operations.py 生成；禁止手改生成物。生成及校验不导入生产 agentd、不启动服务、不调用模型。",
+  "title": "agentd V0 proposed contract schemas",
+  "x-agentd-design-status": "D-proposed-not-implemented",
+  "x-agentd-registered-models": [
+    "Action",
+    "AdminServiceView",
+    "AdminSnapshot",
+    "ArtifactChunk",
+    "ArtifactInput",
+    "ArtifactKeepResult",
+    "ArtifactKeepUpdate",
+    "ArtifactReadQuery",
+    "ArtifactRef",
+    "ArtifactResolutionEvidence",
+    "ArtifactRetention",
+    "Assignment",
+    "AssignmentSummary",
+    "Attention",
+    "BindingView",
+    "CancelTaskRequest",
+    "CancelTaskResult",
+    "CandidateDeliverable",
+    "CandidateView",
+    "CatalogContent",
+    "CatalogMember",
+    "CatalogUpdate",
+    "CatalogView",
+    "CheckResult",
+    "CodeDeliveryObject",
+    "CodeWorkerDelivery",
+    "CommandReply",
+    "ContentRetention",
+    "Context",
+    "CredentialSourceUpdate",
+    "CredentialSourceView",
+    "Criterion",
+    "CriterionResult",
+    "DeferReview",
+    "DeferReviewResult",
+    "Deliverable",
+    "Dependency",
+    "DependencySelector",
+    "Difficulty",
+    "DifficultyLevel",
+    "DifficultyScale",
+    "DifficultySummary",
+    "DispatchResult",
+    "DispatchScope",
+    "DispatchUpdate",
+    "EmptyReviewClaim",
+    "EnvironmentCredentialRef",
+    "EvidenceReply",
+    "EvidenceSegment",
+    "EvidenceUpload",
+    "ExecutableDefinition",
+    "ExecutionConfiguration",
+    "ExecutionInput",
+    "ExecutionObservation",
+    "ExecutionRecoveryPolicy",
+    "ExecutionWorkspace",
+    "ExternalReceiptEvidence",
+    "FieldError",
+    "FileInput",
+    "FixedRef",
+    "GitInput",
+    "GitOid",
+    "HealthReply",
+    "HeldReviewClaim",
+    "HttpMCPDefinition",
+    "InboxEvent",
+    "InboxPage",
+    "InboxQuery",
+    "InputRoot",
+    "KnownUsage",
+    "LatencyStats",
+    "Limits",
+    "Meta",
+    "ModelParameter",
+    "ModelStat",
+    "ModelStatsPage",
+    "ModelStatsQuery",
+    "NativeTemplateDefinition",
+    "NextReviewRequest",
+    "NextReviewResult",
+    "NotificationObservation",
+    "Operation",
+    "OperationScope",
+    "OperationSummary",
+    "OperatorStatementEvidence",
+    "OwnerFileSource",
+    "PageQuery",
+    "Principal",
+    "PrivateValueSource",
+    "Problem",
+    "ProjectDefinition",
+    "ProjectIdentity",
+    "ProjectImpact",
+    "ProjectUpdate",
+    "ProjectView",
+    "Readiness",
+    "RecoveryPolicyDefinition",
+    "RenewReviewRequest",
+    "RenewReviewResult",
+    "ReportWorkerDelivery",
+    "RepositoryDefinition",
+    "Requirements",
+    "Resolution",
+    "ResolutionRequirement",
+    "ResolvedInputsView",
+    "ResourceOverrideResult",
+    "ResourceOverrideUpdate",
+    "ResourceOverrideView",
+    "ResourceRef",
+    "ResourceRequirement",
+    "ResourceVector",
+    "ResumeTaskRequest",
+    "ResumeTaskResult",
+    "ReviewClaim",
+    "ReviewDecision",
+    "ReviewEvidenceManifest",
+    "ReviewEvidenceRef",
+    "ReviewObservation",
+    "ReviewRecoveryPolicy",
+    "RoleBindingResult",
+    "RoleBindingUpdate",
+    "RoutingExplanation",
+    "SaveCatalogResult",
+    "SaveProjectResult",
+    "SaveWorkerResult",
+    "ServiceObservation",
+    "SessionCreate",
+    "SessionIdentity",
+    "SessionReply",
+    "SharedResourceDefinition",
+    "StdioMCPDefinition",
+    "SubmitReviewResult",
+    "SubmitTaskRequest",
+    "SubmitTaskResult",
+    "TaskDetail",
+    "TaskListQuery",
+    "TaskPage",
+    "TaskScope",
+    "TaskSpec",
+    "TaskSpecInput",
+    "TaskSummary",
+    "ToolDefinition",
+    "UnfinishedCounts",
+    "UploadReviewEvidenceResult",
+    "WorkerArtifact",
+    "WorkerCheck",
+    "WorkerCheckRequest",
+    "WorkerCheckResult",
+    "WorkerDelivery",
+    "WorkerDeliveryBase",
+    "WorkerPoolObservation",
+    "WorkerUpdate",
+    "WorkerView"
+  ],
+  "x-draft-parameters": {
+    "action_ref_ttl_seconds": {
+      "owner": "task action service",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": 300
+    },
+    "artifact_chunk_default_bytes": {
+      "owner": "query model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 65536
+    },
+    "artifact_chunk_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 262144
+    },
+    "automatic_review_reopens": {
+      "owner": "review recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "attempts / Task",
+      "value": 3
+    },
+    "candidate_bundle_max_bytes": {
+      "owner": "artifact admission",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 2147483648
+    },
+    "candidate_members_total_max_bytes": {
+      "owner": "artifact admission",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 1073741824
+    },
+    "criteria_max_count": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 64
+    },
+    "criterion_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "UTF-8 bytes",
+      "value": 8192
+    },
+    "delivery_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "canonical UTF-8 JSON bytes",
+      "value": 262144
+    },
+    "execution_input_max_bytes": {
+      "owner": "execution adapter",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "canonical UTF-8 JSON bytes",
+      "value": 1048576
+    },
+    "execution_log_budget_bytes": {
+      "owner": "private log storage",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes / Execution",
+      "value": 67108864
+    },
+    "execution_recovery_backoff_seconds": {
+      "owner": "recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": [
+        30,
+        120
+      ]
+    },
+    "execution_recovery_window_seconds": {
+      "owner": "recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds from first execution fault",
+      "value": 86400
+    },
+    "execution_timeout_seconds": {
+      "owner": "supervisor / frozen recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds / Execution",
+      "value": 7200
+    },
+    "goal_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "UTF-8 bytes",
+      "value": 131072
+    },
+    "id_key_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "ASCII bytes",
+      "value": 128
+    },
+    "inputs_max_count": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 128
+    },
+    "json_max_depth": {
+      "owner": "HTTP decoder / strict_json_loads",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "container levels",
+      "value": 16
+    },
+    "json_request_max_bytes": {
+      "owner": "HTTP decoder / strict_json_loads",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 1048576
+    },
+    "log_pipe_buffer_max_bytes": {
+      "owner": "execution output drainer",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes / stream",
+      "value": 1048576
+    },
+    "manifest_direct_members_max": {
+      "owner": "contract model / artifact store",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 128
+    },
+    "manifest_max_bytes": {
+      "owner": "artifact store",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 1048576
+    },
+    "page_default": {
+      "owner": "query model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 20
+    },
+    "page_max": {
+      "owner": "query model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 100
+    },
+    "reason_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "UTF-8 bytes",
+      "value": 16384
+    },
+    "recheck_timeout_seconds": {
+      "owner": "recovery application",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": 30
+    },
+    "review_activity_ttl_seconds": {
+      "owner": "review lease service",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": 300
+    },
+    "review_evidence_segment_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "decoded bytes",
+      "value": 262144
+    },
+    "review_evidence_segments_max": {
+      "owner": "manifest model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "items",
+      "value": 64
+    },
+    "review_evidence_total_max_bytes": {
+      "owner": "manifest model / artifact store",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "bytes",
+      "value": 16777216
+    },
+    "review_lease_max_hold_seconds": {
+      "owner": "review lease service",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": 28800
+    },
+    "review_lease_ttl_seconds": {
+      "owner": "review lease service",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": 1800
+    },
+    "review_recovery_backoff_seconds": {
+      "owner": "review recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds",
+      "value": [
+        60,
+        300,
+        900
+      ]
+    },
+    "review_recovery_window_seconds": {
+      "owner": "review recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "seconds from first review fault",
+      "value": 86400
+    },
+    "task_spec_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "canonical UTF-8 JSON bytes",
+      "value": 524288
+    },
+    "title_max_bytes": {
+      "owner": "contract model",
+      "schema_or_model_check": true,
+      "status": "P-proposed",
+      "unit": "UTF-8 bytes",
+      "value": 512
+    },
+    "v0_automatic_execution_recoveries": {
+      "owner": "recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "attempts / Task",
+      "value": 0
+    },
+    "v1_automatic_execution_recoveries": {
+      "owner": "recovery policy",
+      "schema_or_model_check": false,
+      "status": "P-proposed",
+      "unit": "attempts / Task",
+      "value": 2
+    }
+  }
+}

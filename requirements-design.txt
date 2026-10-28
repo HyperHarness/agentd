@@ -1,0 +1,4 @@
+# Only the offline design generator/checker dependencies; not application dependencies.
+# Validated with Python 3.14.4. No production agentd package is required.
+pydantic==2.13.5
+jsonschema==4.26.0
